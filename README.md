@@ -17,7 +17,7 @@ URL prints a message on stderr and exits with code 1.
 I also added a small web demo (FastAPI) on top of the same service, mostly to make it easy to try in a browser.
 The CLI is still the main interface.
 
-Live demo: _add the Render URL here_ (free plan, it takes about a minute to wake up; links expire after 60 s there).
+Live demo: https://url-shortener-6vsr.onrender.com (free plan, it takes about a minute to wake up; links expire after 60 s there).
 
 ## Running it
 
