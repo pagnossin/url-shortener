@@ -1,0 +1,37 @@
+services:
+  mongo:
+    image: mongo:8.0
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      BASE_URL: ${BASE_URL:-http://localhost:8000}
+      EXPIRATION_SECONDS: ${EXPIRATION_SECONDS:-3600}
+    ports:
+      - "8000:8000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  tests:
+    build:
+      context: .
+      target: test
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      REQUIRE_MONGO: "1"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    profiles: ["test"]
+
+volumes:
+  mongo-data:

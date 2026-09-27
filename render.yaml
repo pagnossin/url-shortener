@@ -1,0 +1,16 @@
+# MONGO_URI is set in the Render dashboard (MongoDB Atlas)
+services:
+  - type: web
+    name: url-shortener
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /healthz
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB
+        value: url_shortener
+      - key: EXPIRATION_SECONDS
+        value: "60"

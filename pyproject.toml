@@ -1,0 +1,31 @@
+[project]
+name = "url-shortener"
+version = "1.0.0"
+description = "URL shortener CLI backed by MongoDB (with an optional web demo)"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: requires a running MongoDB (MONGO_URI)"]
+addopts = "-ra --strict-markers"
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient` is deprecated"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+files = ["app"]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/__main__.py"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
